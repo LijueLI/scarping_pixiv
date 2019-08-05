@@ -7,6 +7,7 @@ recordfile = open('record.txt','r')
 R = recordfile.readlines()
 
 driver = webdriver.Chrome(executable_path="chromedriver")
+record = ""
 for page in range(1,18):
     url = 'https://www.pixiv.net/search.php?word=kp31&order=date_d&p='+str(page)
     driver.get(url)
@@ -14,7 +15,6 @@ for page in range(1,18):
     soup = BeautifulSoup(pageSource,'html5lib')
     sectiontag = soup.find(id="js-react-search-mid")
     a = sectiontag.findChildren("a")
-    record = ""
     idlast = ""
     recordcount = 0
     for href in a:
@@ -52,6 +52,9 @@ for page in range(1,18):
                     break
             if(recordcount==3):
                 break
+    if(recordcount==3):
+        break
+        
 recordfile.close()
 
 recordfile = open('record.txt','w')
